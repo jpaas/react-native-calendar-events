@@ -657,18 +657,16 @@ RCT_EXPORT_MODULE()
     
     if (event.structuredLocation) {
         NSMutableDictionary *structuredLocation = [[NSMutableDictionary alloc] initWithCapacity:3];
-        if (structuredLocation.title) {
+        [structuredLocation setValue: [NSNumber numberWithDouble: event.structuredLocation.radius] forKey: @"radius"];
+        if (event.structuredLocation.title != nil) {
             [structuredLocation setValue: event.structuredLocation.title forKey: @"title"];
         }
-        if (structuredLocation.radius) {
-            [structuredLocation setValue: event.structuredLocation.radius forKey: @"radius"];
-        }
-        if (event.structuredLocation.geoLocation) {
+        if (event.structuredLocation.geoLocation != nil) {
             [structuredLocation setValue: @{
                                             @"latitude": @(event.structuredLocation.geoLocation.coordinate.latitude),
                                             @"longitude": @(event.structuredLocation.geoLocation.coordinate.longitude)
                                             }
-                                forKey:@"coords"];
+                                  forKey:@"coords"];
         }
         [formedCalendarEvent setValue: structuredLocation forKey:@"structuredLocation"];
     }
