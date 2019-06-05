@@ -596,12 +596,12 @@ RCT_EXPORT_MODULE()
                         break;
                 }
                 NSMutableDictionary *structuredLocation = [[NSMutableDictionary alloc] initWithCapacity:4];
-                [structuredLocation addEntriesFromDictionary: @{
-                                                                @"title": alarm.structuredLocation.title,
-                                                                @"proximity": proximity,
-                                                                @"radius": @(alarm.structuredLocation.radius)
-                                                                }];
-                if (alarm.structuredLocation.geoLocation) {
+                [structuredLocation setValue: proximity forKey: @"proximity"];
+                [structuredLocation setValue: @(alarm.structuredLocation.radius) forKey: @"radius"];
+                if (alarm.structuredLocation.title != nil) {
+                    [structuredLocation setValue: event.structuredLocation.title forKey: @"title"];
+                }
+                if (alarm.structuredLocation.geoLocation != nil) {
                     [structuredLocation setValue: @{
                                                     @"latitude": @(alarm.structuredLocation.geoLocation.coordinate.latitude),
                                                     @"longitude": @(alarm.structuredLocation.geoLocation.coordinate.longitude)
@@ -657,7 +657,7 @@ RCT_EXPORT_MODULE()
     
     if (event.structuredLocation) {
         NSMutableDictionary *structuredLocation = [[NSMutableDictionary alloc] initWithCapacity:3];
-        [structuredLocation setValue: [NSNumber numberWithDouble: event.structuredLocation.radius] forKey: @"radius"];
+        [structuredLocation setValue: @(event.structuredLocation.radius) forKey: @"radius"];
         if (event.structuredLocation.title != nil) {
             [structuredLocation setValue: event.structuredLocation.title forKey: @"title"];
         }
