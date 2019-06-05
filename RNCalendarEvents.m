@@ -657,10 +657,12 @@ RCT_EXPORT_MODULE()
     
     if (event.structuredLocation) {
         NSMutableDictionary *structuredLocation = [[NSMutableDictionary alloc] initWithCapacity:3];
-        [structuredLocation addEntriesFromDictionary: @{
-                                                        @"title": event.structuredLocation.title,
-                                                        @"radius": @(event.structuredLocation.radius)
-                                                        }];
+        if (structuredLocation.title) {
+            [structuredLocation setValue: event.structuredLocation.title forKey: @"title"];
+        }
+        if (structuredLocation.radius) {
+            [structuredLocation setValue: event.structuredLocation.radius forKey: @"radius"];
+        }
         if (event.structuredLocation.geoLocation) {
             [structuredLocation setValue: @{
                                             @"latitude": @(event.structuredLocation.geoLocation.coordinate.latitude),
